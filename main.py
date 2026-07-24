@@ -61,7 +61,11 @@ async def any_document_router(update, context):
         await photo_received(update, context)
 
 
-def main():
+def build_application():
+    """اپلیکیشن تلگرام رو می‌سازه و همه‌ی هندلرها رو ثبت می‌کنه.
+    این تابع جدا از main() هست تا هم اجرای مستقیم (main.py) و هم
+    آداپتورهای دیگه (مثل flask_app.py برای PythonAnywhere) بتونن ازش استفاده کنن،
+    بدون اینکه polling یا webhook رو خودشون استارت کنن."""
     if not BOT_TOKEN:
         raise RuntimeError(
             "متغیر محیطی BOT_TOKEN تنظیم نشده. توکن ربات رو از @BotFather بگیر و ست کن."
@@ -100,6 +104,12 @@ def main():
     application.add_handler(CommandHandler("remind", remind_command))
     application.add_handler(CommandHandler("reminders", list_reminders_command))
     application.add_handler(CommandHandler("delremind", delete_reminder_command))
+
+    return application
+
+
+def main():
+    application = build_application()
 
     # زمان‌بندی مجدد یادآوری‌های قبلی (برای وقتی سرور ری‌استارت شده)
     application.job_queue.run_once(
