@@ -1,0 +1,4 @@
+# این فایل اختیاریه. فقط اگه سرورت حداقل ۱ گیگ RAM آزاد داره نصبش کن.
+# نصب: pip install -r requirements.txt -r requirements-removebg.txt
+rembg==2.0.59
+onnxruntime==1.19.2
